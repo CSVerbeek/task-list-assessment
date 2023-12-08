@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatTableModule } from '@angular/material/table';
+
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { TaskListComponent } from './task-list/task-list.component';
@@ -13,7 +15,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     ],
     imports: [
         CommonModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        MatTableModule
     ]
 })
 export class DashboardModule { }

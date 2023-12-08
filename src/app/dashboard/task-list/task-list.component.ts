@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Task } from '../../shared/task';
+import { ITaskService, TASK_SERVICE } from '../../i-task.service';
 
 @Component({
     selector: 'tla-task-list',
@@ -6,6 +9,9 @@ import { Component } from '@angular/core';
     styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent {
-    constructor() {
+    readonly tasks$: Observable<Task[]>;
+
+    constructor(@Inject(TASK_SERVICE) public taskService: ITaskService) {
+        this.tasks$ = this.taskService.tasks$;
     }
 }

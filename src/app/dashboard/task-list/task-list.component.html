@@ -1,1 +1,8 @@
-<p>task-list works!</p>
+@if(tasks$) {
+<table mat-table [dataSource]="tasks$" class="task-list">
+    <tr mat-header-row *matHeaderRowDef="[]"></tr>
+    <tr mat-row *matRowDef="let row; columns: [];" class="task-item"></tr>
+</table>
+} @else {
+Loading tasks...
+}

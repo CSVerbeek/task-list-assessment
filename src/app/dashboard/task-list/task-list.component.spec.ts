@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { MatTableModule } from '@angular/material/table';
+
 import { TaskListComponent } from './task-list.component';
 import { ITaskService, TASK_SERVICE } from '../../i-task.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -29,7 +31,7 @@ describe('TaskListComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [TaskListComponent],
             providers: [{ provide: TASK_SERVICE, useClass: MockTaskService }],
-            imports: []
+            imports: [MatTableModule]
         })
             .compileComponents();
 
@@ -45,7 +47,7 @@ describe('TaskListComponent', () => {
     /*
         TDD: First write the test for an outside in approach. At the time this test was committed, the test is failing.
     */
-    it('should have list with tasks returned from #taskService.tasks$', () => {
+    it('should have list with same number of tasks returned from #taskService.tasks$', () => {
         const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
         const states = ['new', 'active', 'done'] as const;
         const nrOfTasks = 10;
