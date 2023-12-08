@@ -1,6 +1,22 @@
 # TaskListAssessment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+This project is an assessment for the job of Front-end Developer. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+
+Create an angular application for a simple task list. The application must contain at least three components:
+
+1. display task list
+1. display task details
+1. search field for finding tasks
+
+Use a service to keep track of the data. Use routing between the components.
+
+Expectations:
+
+1. create a form for adding tasks to the list
+1. use a fake API for retrieving tasks
+1. search for tasks where the matches will be highlighted
+1. unit testing
+1. EXTRA - add authorisation
 
 ## Development server
 
