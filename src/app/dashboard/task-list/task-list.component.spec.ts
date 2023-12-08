@@ -52,14 +52,53 @@ describe('TaskListComponent', () => {
         const states = ['new', 'active', 'done'] as const;
         const nrOfTasks = 10;
         const tasks: Task[] = new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
-            title: `Task ${index}`,
+            title: `Title ${index}`,
             description: `Task description ${index}`,
-            state: states[index % 3]
+            status: states[index % 3]
         }));
         _tasks$.next(tasks);
         fixture.detectChanges();
         expect(taskList).withContext('task list exists').toBeTruthy();
         expect(taskList?.querySelectorAll('.task-item').length).withContext('all task items are present in the list').toEqual(nrOfTasks);
+    });
+
+    /*
+        TDD: Test failed first.
+    */
+    it('should show the title, description and status of a task', () => {
+        const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
+        const states = ['new', 'active', 'done'] as const;
+        const nrOfTasks = 10;
+        const tasks: Task[] = new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
+            title: `Title ${index}`,
+            description: `Task description ${index}`,
+            status: states[index % 3]
+        }));
+        _tasks$.next(tasks);
+        fixture.detectChanges();
+        const taskItemElements: NodeListOf<HTMLElement> | undefined = taskList?.querySelectorAll('.task-item');
+        const taskItems: {
+            titleElement: HTMLElement | null;
+            descriptionElement: HTMLElement | null;
+            statusElement: HTMLElement | null;
+        }[] = [];
+        taskItemElements?.forEach(taskItem => taskItems.push({
+            titleElement: taskItem.querySelector('.task-title'),
+            descriptionElement: taskItem.querySelector('.task-description'),
+            statusElement: taskItem.querySelector('.task-status')
+        }));
+        tasks.forEach(task => {
+            expect(taskItems
+                .map(({ titleElement, descriptionElement, statusElement }) => ({
+                    title: titleElement?.textContent,
+                    description: descriptionElement?.textContent,
+                    status: statusElement?.textContent
+                }))
+                .some(({ title, description, status }) =>
+                    title === task.title && description === task.description && status === task.status
+                )
+            ).withContext(`Task ${task.title} has information rendered`).toBeTrue();
+        });
     });
 
     afterEach(() => {

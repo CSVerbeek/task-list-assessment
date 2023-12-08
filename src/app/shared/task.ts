@@ -1,4 +1,8 @@
-/*
-    This is just a quick placeholder since for now only the type is needed and not its actual properties.
-*/
-export type Task = object;
+const taskStates = ['new', 'active', 'done'] as const;
+type TaskState = typeof taskStates[number];
+
+export type Task = {
+    title: string;
+    description: string;
+    status: TaskState;
+};
