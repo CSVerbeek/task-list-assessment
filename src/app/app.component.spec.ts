@@ -1,35 +1,35 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
+    let component: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+                MatToolbarModule
+            ],
+            declarations: [
+                AppComponent
+            ],
+        }).compileComponents();
 
-  it(`should have as title 'task-list-assessment'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('task-list-assessment');
-  });
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, task-list-assessment');
-  });
+    it('should create the app', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it(`should render with title 'Task List Assessment'`, () => {
+        const titleElement: HTMLElement = fixture.nativeElement.querySelector('.topbar-title');
+        expect(titleElement).withContext('title element is present').toBeTruthy();
+        expect(titleElement.textContent).withContext('title element has text "Task List Assessment"').toEqual('Task List Assessment');
+    });
 });
