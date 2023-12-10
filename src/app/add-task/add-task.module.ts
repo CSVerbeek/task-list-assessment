@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AddTaskRoutingModule } from './add-task-routing.module';
 import { AddTaskComponent } from './add-task.component';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { TaskFormComponent } from './task-form/task-form.component';
     ],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         AddTaskRoutingModule,
         MatFormFieldModule,
         MatInputModule,
