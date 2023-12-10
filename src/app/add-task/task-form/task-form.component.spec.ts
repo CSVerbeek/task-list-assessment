@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TaskFormComponent } from './task-form.component';
+import { TaskFormValue } from '../shared/types/task-form-value.type';
 
 fdescribe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -51,5 +52,20 @@ fdescribe('TaskFormComponent', () => {
 
         // mat-select field was difficult to set value on element, so just use default value
         expect(component.taskForm.value).withContext('contains the correct values').toEqual({ title, description, status: 'new' });
+    });
+
+    it('should emit the values form on submit', () => {
+        const formValue: TaskFormValue = {
+            title: 'New task',
+            description: 'The description of the new task',
+            status: 'active'
+        };
+        const submittedSpy = jasmine.createSpy('submittedSpy');
+        component.submitted.subscribe({
+            next: submittedSpy,
+        });
+        component.taskForm.setValue(formValue);
+        component.onSubmit();
+        expect(submittedSpy).withContext('form value is emitted through output').toHaveBeenCalledOnceWith(formValue);
     });
 });

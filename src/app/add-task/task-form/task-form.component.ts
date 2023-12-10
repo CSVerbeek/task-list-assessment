@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { TaskStatus, TaskStatuses } from '../../shared/task';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskFormValue } from '../shared/types/task-form-value.type';
 
 @Component({
@@ -9,20 +9,23 @@ import { TaskFormValue } from '../shared/types/task-form-value.type';
   styleUrl: './task-form.component.scss'
 })
 export class TaskFormComponent {
+    @Output()
+    submitted = new EventEmitter<TaskFormValue>();
+
     readonly taskStatusValues: TaskStatus[] = [...TaskStatuses];
 
     taskForm: FormGroup<TaskForm> = new FormGroup({
-        title: new FormControl<string>('', { nonNullable: true }),
-        description: new FormControl<string>('', { nonNullable: true }),
-        status: new FormControl<TaskStatus>('new', { nonNullable: true }),
+        title: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+        description: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+        status: new FormControl<TaskStatus>('new', { nonNullable: true, validators: [Validators.required] }),
     });
 
     onSubmit(): void {
         if(!this.taskForm.valid) {
             return;
         }
-        const form: Partial<TaskFormValue> = this.taskForm.value;
-        console.log(form);
+        const formValue: Partial<TaskFormValue> = this.taskForm.value;
+        this.submitted.emit(formValue as TaskFormValue);
     }
 }
 
