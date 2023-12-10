@@ -87,6 +87,21 @@ describe('TaskDetailsComponent', () => {
         expect({ id: 123, title, description, status }).withContext('rendered details match the found task').toEqual(task);
     });
 
+    it('should show a user friendly message when the task is not found', () => {
+        const task: Task = {
+            id: 321,
+            title: 'First task',
+            description: 'This is the first task to do',
+            status: 'done'
+        };
+        _tasks$.next([task]);
+        fixture.detectChanges();
+
+        const nativeElement: HTMLElement | null =fixture.nativeElement;
+        const taskDetails: HTMLElement | null = nativeElement?.querySelector('.task-details') ?? null;
+        expect(taskDetails).withContext('no task details shown when no task is found').toBeNull();
+        expect(nativeElement?.querySelector('.no-task-found-message')?.textContent).withContext('not found message is shown').toEqual('Task not found');
+    });
 
     afterEach(() => {
         // reset the #tasks$ Observable to initial value after each test
