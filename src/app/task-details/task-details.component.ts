@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ITaskService, TASK_SERVICE } from '../i-task.service';
 import { Task } from '../shared/task';
 
 @Component({
@@ -8,9 +11,12 @@ import { Task } from '../shared/task';
     styleUrl: './task-details.component.scss'
 })
 export class TaskDetailsComponent {
-    readonly task$: Observable<Task | undefined>;
+    task$: Observable<Task | undefined>;
 
-    constructor() {
-        this.task$ = new Observable<Task | undefined>();
+    constructor(private route: ActivatedRoute, @Inject(TASK_SERVICE) private taskService: ITaskService) {
+        this.task$ = this.route.paramMap
+            .pipe(
+                switchMap((params) => this.taskService.findById(Number(params.get('id')!))),
+            );
     }
 }

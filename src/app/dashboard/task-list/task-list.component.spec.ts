@@ -6,7 +6,6 @@ import { TaskListComponent } from './task-list.component';
 import { ITaskService, TASK_SERVICE } from '../../i-task.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Task } from '../../shared/task';
-import { Injectable } from '@angular/core';
 
 /*
     Needed to have control over the Observable inside our mocked service.
@@ -16,11 +15,14 @@ const _tasks$: Subject<Task[]> = new BehaviorSubject<Task[]>([]);
 /*
     A mock for the service that has to implement a certain contract used in the tests.
 */
-@Injectable({
-    providedIn: null,
-})
 class MockTaskService implements ITaskService {
     tasks$: Observable<Task[]> = _tasks$.asObservable();
+
+    // For this function I added an es lint rule in order to show that the parameter from the parent function is not used
+    findById(_id: Task['id']): Observable<Task | undefined> {
+        // This function is not used in this test suite
+        throw new Error('Method not implemented.');
+    }
 }
 
 describe('TaskListComponent', () => {

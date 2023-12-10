@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskDetailsComponent } from './task-details.component';
 import { ITaskService, TASK_SERVICE } from '../i-task.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../shared/task';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 /*
     Needed to have control over the Observable inside our mocked service.
@@ -30,7 +31,12 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [TaskDetailsComponent],
-            providers: [{ provide: TASK_SERVICE, useClass: MockTaskService }],
+            providers: [{
+                provide: ActivatedRoute,
+                useValue: { paramMap: of(convertToParamMap({ id: 123 })) }
+            }, {
+                provide: TASK_SERVICE, useClass: MockTaskService
+            }],
         })
             .compileComponents();
 
@@ -47,7 +53,6 @@ describe('TaskDetailsComponent', () => {
         TDD: Test fails at time of commit.
     */
     it('should receive task with id from route through #task$', () => {
-        // TODO: Make sure the component gets id 123 from ActivatedRoute
         const task123: Task = {
             id: 123,
             title: 'Task found by id',

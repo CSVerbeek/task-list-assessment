@@ -8,6 +8,8 @@ import { InjectionToken } from "@angular/core";
 */
 export interface ITaskService {
     readonly tasks$: Observable<Task[]>;
+    
+    findById(id: Task['id']): Observable<Task | undefined>;
 }
 
 /*

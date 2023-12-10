@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ITaskService, TASK_SERVICE } from './i-task.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Task } from './shared/task';
 
 @NgModule({
@@ -25,11 +26,17 @@ import { Task } from './shared/task';
         useValue: new class implements ITaskService {
             tasks$: Observable<Task[]> = new BehaviorSubject<Task[]>(
                 new Array(5).fill(null).map((_val, index): Task => ({
+                    id: index,
                     title: `Title ${index}`,
                     description: `Description ${index}`,
                     status: 'new'
                 }))
             );
+            findById(id: Task['id']): Observable<Task | undefined> {
+                return this.tasks$.pipe(
+                    map(tasks => tasks.find(task => task.id === id))
+                );
+            }
         }
     }],
     bootstrap: [AppComponent]
