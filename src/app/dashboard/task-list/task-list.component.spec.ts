@@ -48,14 +48,9 @@ describe('TaskListComponent', () => {
         TDD: First write the test for an outside in approach. At the time this test was committed, the test is failing.
     */
     it('should have list with same number of tasks returned from #taskService.tasks$', () => {
-        const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
-        const states = ['new', 'active', 'done'] as const;
         const nrOfTasks = 10;
-        const tasks: Task[] = new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
-            title: `Title ${index}`,
-            description: `Task description ${index}`,
-            status: states[index % 3]
-        }));
+        const tasks = createTasks(nrOfTasks);
+        const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
         _tasks$.next(tasks);
         fixture.detectChanges();
         expect(taskList).withContext('task list exists').toBeTruthy();
@@ -66,34 +61,12 @@ describe('TaskListComponent', () => {
         TDD: Test failed first.
     */
     it('should show the title, description and status of a task', () => {
-        const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
-        const states = ['new', 'active', 'done'] as const;
-        const nrOfTasks = 10;
-        const tasks: Task[] = new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
-            title: `Title ${index}`,
-            description: `Task description ${index}`,
-            status: states[index % 3]
-        }));
+        const tasks = createTasks(10);
         _tasks$.next(tasks);
         fixture.detectChanges();
-        const taskItemElements: NodeListOf<HTMLElement> | undefined = taskList?.querySelectorAll('.task-item');
-        const taskItems: {
-            titleElement: HTMLElement | null;
-            descriptionElement: HTMLElement | null;
-            statusElement: HTMLElement | null;
-        }[] = [];
-        taskItemElements?.forEach(taskItem => taskItems.push({
-            titleElement: taskItem.querySelector('.task-title'),
-            descriptionElement: taskItem.querySelector('.task-description'),
-            statusElement: taskItem.querySelector('.task-status')
-        }));
+        const taskItems = getRenderedTaskItemsData(fixture);
         tasks.forEach(task => {
             expect(taskItems
-                .map(({ titleElement, descriptionElement, statusElement }) => ({
-                    title: titleElement?.textContent,
-                    description: descriptionElement?.textContent,
-                    status: statusElement?.textContent
-                }))
                 .some(({ title, description, status }) =>
                     title === task.title && description === task.description && status === task.status
                 )
@@ -106,3 +79,42 @@ describe('TaskListComponent', () => {
         _tasks$.next([]);
     });
 });
+
+/*
+    Extract code into smaller functions, to prevent duplication and so the code inside the actual is comprehensive and fast to read
+*/
+function createTasks(nrOfTasks: number): Task[] {
+    const states = ['new', 'active', 'done'] as const;
+    return new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
+        title: `Title ${index}`,
+        description: `Task description ${index}`,
+        status: states[index % 3]
+    }));
+}
+
+/*
+    This function is only used once, so it does not solve any duplication, however it still makes the task code easier to read
+*/
+function getRenderedTaskItemsData(fixture: ComponentFixture<TaskListComponent>): {
+    title: string | null | undefined;
+    description: string | null | undefined;
+    status: string | null | undefined;
+}[] {
+    const taskList: HTMLElement | null = fixture.nativeElement.querySelector('.task-list');
+    const taskItemElements: NodeListOf<HTMLElement> | undefined = taskList?.querySelectorAll('.task-item');
+    const taskItems: {
+        titleElement: HTMLElement | null;
+        descriptionElement: HTMLElement | null;
+        statusElement: HTMLElement | null;
+    }[] = [];
+    taskItemElements?.forEach(taskItem => taskItems.push({
+        titleElement: taskItem.querySelector('.task-title'),
+        descriptionElement: taskItem.querySelector('.task-description'),
+        statusElement: taskItem.querySelector('.task-status')
+    }));
+    return taskItems.map(({ titleElement, descriptionElement, statusElement }) => ({
+        title: titleElement?.textContent,
+        description: descriptionElement?.textContent,
+        status: statusElement?.textContent
+    }));
+}
