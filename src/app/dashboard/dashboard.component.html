@@ -1,3 +1,4 @@
 <div class="page">
-    <tla-task-list></tla-task-list>
+    <tla-search-bar (searchValueChange)="onSearchValueChange($event)" class="search-bar"></tla-search-bar>
+    <tla-task-list [searchValue]="searchValue" class="task-list"></tla-task-list>
 </div>

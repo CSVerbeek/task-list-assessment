@@ -1,8 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardComponent } from './dashboard.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { TASK_SERVICE } from '../i-task.service';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -10,7 +15,8 @@ describe('DashboardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [DashboardComponent, TaskListComponent],
+            imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatTableModule, NoopAnimationsModule],
+            declarations: [DashboardComponent, TaskListComponent, SearchBarComponent],
             // The TaskService is not used in this test, but is a dependency of TaskListComponent so it is sufficient to mock it with a non
             // null value
             providers: [{ provide: TASK_SERVICE, useValue: '' }],

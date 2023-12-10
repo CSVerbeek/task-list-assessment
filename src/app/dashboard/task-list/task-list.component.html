@@ -2,12 +2,20 @@
 <table mat-table [dataSource]="tasks$" class="task-list">
     <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let task" class="task-title">{{task.title}}</td>
+        <td mat-cell *matCellDef="let task" class="task-title">
+            @for(part of splitOnSearchValue(task.title); track $index) {
+                <span [class.highlight]="part?.match">{{part?.text}}</span>
+            }
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let task" class="task-description">{{task.description}}</td>
+        <td mat-cell *matCellDef="let task" class="task-description">
+            @for(part of splitOnSearchValue(task.description); track $index) {
+                <span [class.highlight]="part?.match">{{part?.text}}</span>
+            }
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="status">

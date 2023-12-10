@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Inject, Input } from '@angular/core';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Task } from '../../shared/task';
 import { ITaskService, TASK_SERVICE } from '../../i-task.service';
 import { Router } from '@angular/router';
@@ -10,13 +11,44 @@ import { Router } from '@angular/router';
     styleUrl: './task-list.component.scss'
 })
 export class TaskListComponent {
+    readonly searchValue$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+    @Input()
+    set searchValue(value: string) {
+        this.searchValue$.next(value);
+    }
+
+    get searchValue(): string {
+        return this.searchValue$.value;
+    }
+
     readonly tasks$: Observable<Task[]>;
 
     constructor(@Inject(TASK_SERVICE) public taskService: ITaskService, private router: Router) {
-        this.tasks$ = this.taskService.tasks$;
+        this.tasks$ = combineLatest([this.taskService.tasks$, this.searchValue$])
+            .pipe(
+                map(([tasks, searchValue]): Task[] => this.filterTasksBySearchByValue(tasks, searchValue))
+            );
     }
 
     onTaskRowClick(id: Task['id']): void {
         this.router.navigate(['/task-details', id]);
+    }
+
+    splitOnSearchValue(value: string): { text: string; match: boolean }[] {
+        if (!this.searchValue || !value.includes(this.searchValue)) {
+            return [{ text: value, match: false }];
+        }
+        const result = value.split(this.searchValue)
+            .flatMap(part => ([{ text: part, match: false }, { text: this.searchValue, match: true }]));
+        delete result[result.length - 1];
+        return result;
+    }
+
+    private filterTasksBySearchByValue(tasks: Task[], searchValue: string): Task[] {
+        if (!searchValue) {
+            return tasks;
+        }
+        return tasks.filter(task => task.title.toLowerCase().includes(searchValue.toLocaleLowerCase()) || task.description.toLowerCase().includes(searchValue.toLocaleLowerCase()));
     }
 }

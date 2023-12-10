@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
     styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+    searchValue: string = '';
+
+    onSearchValueChange(newValue: string): void {
+        this.searchValue = newValue;
+    }
 }
