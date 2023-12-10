@@ -1,1 +1,17 @@
-<p>task-form works!</p>
+<form class="task-form">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" class="task-title">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Description" class="task-description"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select class="task-status">
+            @for(taskStatusValue of taskStatusValues; track $index) {
+                <mat-option [value]="taskStatusValue">{{taskStatusValue}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</form>

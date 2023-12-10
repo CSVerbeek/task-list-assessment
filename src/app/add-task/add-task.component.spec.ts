@@ -2,6 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskComponent } from './add-task.component';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AddTaskComponent', () => {
     let component: AddTaskComponent;
@@ -9,6 +13,7 @@ describe('AddTaskComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule],
             declarations: [AddTaskComponent, TaskFormComponent]
         })
             .compileComponents();

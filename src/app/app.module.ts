@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ITaskService, TASK_SERVICE } from './i-task.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Task } from './shared/task';
 
 @NgModule({
@@ -21,6 +23,9 @@ import { Task } from './shared/task';
         MatToolbarModule
     ],
     providers: [{
+        provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+        useValue: { appearance: 'outline' }
+    }, {
         provide: TASK_SERVICE,
         // Temporarily use a stub for development, so ng serve works without errors
         useValue: new class implements ITaskService {
