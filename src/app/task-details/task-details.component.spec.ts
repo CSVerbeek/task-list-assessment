@@ -60,10 +60,27 @@ describe('TaskDetailsComponent', () => {
             status: 'new'
         };
         _tasks$.next([task123]);
+
         const taskSpy = jasmine.createSpy('task');
         component.task$.subscribe({
             next: taskSpy
         });
         expect(taskSpy).withContext('#task$ received task with id 123').toHaveBeenCalledOnceWith(task123);
+    });
+
+    it('should render the details on the screen', () => {
+        const task: Task = {
+            id: 123,
+            title: 'First task',
+            description: 'This is the first task to do',
+            status: 'done'
+        };
+        _tasks$.next([task]);
+
+        const taskDetails: HTMLElement | null = fixture.nativeElement.querySelector('.task-details');
+        const title: string | null | undefined = taskDetails?.querySelector('.task-title')?.textContent;
+        const description: string | null | undefined = taskDetails?.querySelector('.task-description')?.textContent;
+        const status: string | null | undefined = taskDetails?.querySelector('.task-status')?.textContent;
+        expect({ id: 123, title, description, status }).withContext('rendered details match the found task').toEqual(task);
     });
 });
