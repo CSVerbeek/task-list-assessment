@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ITaskService, TASK_SERVICE } from './i-task.service';
 import { Task } from './shared/task';
+import { ADD_TASK_SERVICE, IAddTaskService } from './i-add-task.service';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,13 @@ import { Task } from './shared/task';
                 return this.tasks$.pipe(
                     map(tasks => tasks.find(task => task.id === id))
                 );
+            }
+        }
+    }, {
+        provide: ADD_TASK_SERVICE,
+        useValue: new class implements IAddTaskService {
+            addTask(task: Omit<Task, 'id'>): void {
+                console.log(task);
             }
         }
     }],
