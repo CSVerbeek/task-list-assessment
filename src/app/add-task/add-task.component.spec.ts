@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskComponent } from './add-task.component';
+import { TaskFormComponent } from './task-form/task-form.component';
 
 describe('AddTaskComponent', () => {
     let component: AddTaskComponent;
@@ -8,7 +9,7 @@ describe('AddTaskComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [AddTaskComponent]
+            declarations: [AddTaskComponent, TaskFormComponent]
         })
             .compileComponents();
 
@@ -22,7 +23,7 @@ describe('AddTaskComponent', () => {
     });
 
     it('should have a task form', () => {
-        const taskForm: HTMLElement | null = fixture.nativeElement.querySelector('.task-form');
+        const taskForm: HTMLElement | null = fixture.nativeElement.querySelector('tla-task-form');
         expect(taskForm).withContext('task form is rendered').toBeTruthy();
     });
 });
