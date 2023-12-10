@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MatCardModule } from '@angular/material/card';
+
 import { TaskDetailsRoutingModule } from './task-details-routing.module';
 import { TaskDetailsComponent } from './task-details.component';
 
@@ -11,7 +13,8 @@ import { TaskDetailsComponent } from './task-details.component';
     ],
     imports: [
         CommonModule,
-        TaskDetailsRoutingModule
+        TaskDetailsRoutingModule,
+        MatCardModule
     ]
 })
 export class TaskDetailsModule { }

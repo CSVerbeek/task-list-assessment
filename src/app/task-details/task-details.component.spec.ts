@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../shared/task';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 /*
     Needed to have control over the Observable inside our mocked service.
@@ -31,6 +32,7 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [TaskDetailsComponent],
+            imports: [MatCardModule],
             providers: [{
                 provide: ActivatedRoute,
                 useValue: { paramMap: of(convertToParamMap({ id: 123 })) }
@@ -76,11 +78,18 @@ describe('TaskDetailsComponent', () => {
             status: 'done'
         };
         _tasks$.next([task]);
+        fixture.detectChanges();
 
-        const taskDetails: HTMLElement | null = fixture.nativeElement.querySelector('.task-details');
-        const title: string | null | undefined = taskDetails?.querySelector('.task-title')?.textContent;
-        const description: string | null | undefined = taskDetails?.querySelector('.task-description')?.textContent;
-        const status: string | null | undefined = taskDetails?.querySelector('.task-status')?.textContent;
+        const nativeElement: HTMLElement = fixture.nativeElement;
+        const title: string | null | undefined = nativeElement.querySelector('.task-title')?.textContent?.trim();
+        const description: string | null | undefined = nativeElement.querySelector('.task-description')?.textContent?.trim();
+        const status: string | null | undefined = nativeElement.querySelector('.task-status')?.textContent?.trim();
         expect({ id: 123, title, description, status }).withContext('rendered details match the found task').toEqual(task);
+    });
+
+
+    afterEach(() => {
+        // reset the #tasks$ Observable to initial value after each test
+        _tasks$.next([]);
     });
 });

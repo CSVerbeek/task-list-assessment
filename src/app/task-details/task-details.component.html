@@ -1,1 +1,13 @@
-<p>task-details works!</p>
+@if(task$ | async; as task) {
+<mat-card>
+    <mat-card-header class="task-title">
+        <h2>{{task.title}}</h2>
+    </mat-card-header>
+    <mat-card-content>
+        <h3>Description</h3>
+        <p class="task-description">{{task.description}}</p>
+        <h3>Status</h3>
+        <p class="task-status">{{task.status}}</p>
+    </mat-card-content>
+</mat-card>
+}
