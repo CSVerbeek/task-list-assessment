@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskFormComponent } from './task-form.component';
 import { TaskFormValue } from '../shared/types/task-form-value.type';
 
-fdescribe('TaskFormComponent', () => {
+describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
     let fixture: ComponentFixture<TaskFormComponent>;
 

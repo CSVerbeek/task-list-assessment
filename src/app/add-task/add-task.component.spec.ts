@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AddTaskComponent', () => {
     let component: AddTaskComponent;
@@ -13,7 +14,7 @@ describe('AddTaskComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule],
+            imports: [MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule, ReactiveFormsModule],
             declarations: [AddTaskComponent, TaskFormComponent]
         })
             .compileComponents();
