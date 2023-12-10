@@ -86,6 +86,7 @@ describe('TaskListComponent', () => {
 function createTasks(nrOfTasks: number): Task[] {
     const states = ['new', 'active', 'done'] as const;
     return new Array(nrOfTasks).fill(null).map((_val, index): Task => ({
+        id: index,
         title: `Title ${index}`,
         description: `Task description ${index}`,
         status: states[index % 3]

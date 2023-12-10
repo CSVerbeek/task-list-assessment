@@ -8,6 +8,9 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'
+}, {
+    path: 'task-details',
+    loadChildren: () => import('./task-details/task-details.module').then(m => m.TaskDetailsModule)
 }];
 
 @NgModule({
