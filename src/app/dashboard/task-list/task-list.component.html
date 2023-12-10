@@ -16,7 +16,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="['title','description','status']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['title','description','status'];" class="task-item"></tr>
+    <tr mat-row (click)="onTaskRowClick(row.id)" *matRowDef="let row; columns: ['title','description','status'];" class="task-item"></tr>
 </table>
 } @else {
 Loading tasks...
