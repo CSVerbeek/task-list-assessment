@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { delay, take } from 'rxjs/operators';
 import { Task } from '../shared/task';
 import { IDataApiService } from '../core/i-data-api.service';
 
@@ -19,7 +19,7 @@ export class StubLocalDataApiService implements IDataApiService {
     }
 
     getTasks(): Observable<Task[]> {
-        return of([...this.tasks]).pipe(take(1));
+        return of([...this.tasks]).pipe(delay(250), take(1));
     }
 
     postTask(task: Omit<Task, 'id'>): Observable<Task> {
@@ -29,19 +29,19 @@ export class StubLocalDataApiService implements IDataApiService {
         };
         this.tasks.push(newTask);
         this.saveTasksToLocalStorage();
-        return of(newTask);
+        return of(newTask).pipe(delay(250));
     }
 
     putTask(task: Task): Observable<Task> {
         this.tasks[this.tasks.findIndex(existingTask => existingTask.id == task.id)] = task;
         this.saveTasksToLocalStorage();
-        return of(task);
+        return of(task).pipe(delay(250));
     }
 
     deleteTask(id: number): Observable<void> {
         this.tasks.splice(this.tasks.findIndex(task => task.id === id), 1);
         this.saveTasksToLocalStorage();
-        return of(undefined);
+        return of(undefined).pipe(delay(250));
     }
 
     private saveTasksToLocalStorage(): void {
