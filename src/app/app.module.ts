@@ -9,9 +9,8 @@ import { AppComponent } from './app.component';
 import { TASK_SERVICE } from './core/i-task.service';
 import { ADD_TASK_SERVICE } from './core/i-add-task.service';
 import { TaskService } from './core/task.service';
-import { DATA_API_SERVICE, IDataApiService } from './core/i-data-api.service';
-import { Observable, of } from 'rxjs';
-import { Task } from './shared/task';
+import { StubLocalDataApiService } from './data-api/data-api.service';
+import { DATA_API_SERVICE } from './core/i-data-api.service';
 
 @NgModule({
     declarations: [
@@ -34,18 +33,7 @@ import { Task } from './shared/task';
         useExisting: TaskService
     }, {
         provide: DATA_API_SERVICE,
-        // Temporarily use a stub for development, so ng serve works without errors
-        useValue: new class implements IDataApiService {
-            getTasks(): Observable<Task[]> {
-                return of([]);
-            }
-            postTask(task: Omit<Task, 'id'>): Observable<Task> {
-                return of({
-                    id: 1,
-                    ...task
-                });
-            }
-}
+        useExisting: StubLocalDataApiService
     }],
     bootstrap: [AppComponent]
 })
