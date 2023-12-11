@@ -10,6 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
+import { TASK_SERVICE } from '../core/i-task.service';
+import { EDIT_TASK_SERVICE } from '../core/i-edit-task.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AddTaskComponent', () => {
     let component: AddTaskComponent;
@@ -24,8 +28,19 @@ describe('AddTaskComponent', () => {
             imports: [MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule, ReactiveFormsModule],
             declarations: [AddTaskComponent, TaskFormComponent],
             providers: [{
+                provide: TASK_SERVICE,
+                useValue: '',
+            }, {
                 provide: ADD_TASK_SERVICE,
                 useValue: addTaskMock
+            }, {
+                provide: EDIT_TASK_SERVICE,
+                useValue: ''
+            }, {
+                provide: ActivatedRoute,
+                useValue: {
+                    paramMap: of(convertToParamMap({id: 1}))
+                }
             }]
         })
             .compileComponents();

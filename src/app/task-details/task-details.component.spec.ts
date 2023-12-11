@@ -5,8 +5,9 @@ import { ITaskService, TASK_SERVICE } from '../core/i-task.service';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../shared/task';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, RouterModule, convertToParamMap } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { DELETE_TASK_SERVICE } from '../core/i-delete-task.service';
 
 /*
     Needed to have control over the Observable inside our mocked service.
@@ -32,12 +33,14 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [TaskDetailsComponent],
-            imports: [MatCardModule],
+            imports: [MatCardModule, RouterModule],
             providers: [{
                 provide: ActivatedRoute,
                 useValue: { paramMap: of(convertToParamMap({ id: 123 })) }
             }, {
                 provide: TASK_SERVICE, useClass: MockTaskService
+            }, {
+                provide: DELETE_TASK_SERVICE, useValue: ''
             }],
         })
             .compileComponents();

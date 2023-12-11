@@ -23,6 +23,9 @@ describe('TaskService', () => {
                     ...task
                 });
             }
+            putTask(_task: Task): Observable<Task> {
+                throw new Error('Method not implemented.');
+            }
             deleteTask(_id: number): Observable<void> {
                 return of();
             }
