@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, throttleTime } from 'rxjs/operators';
+import { takeUntil, throttleTime } from 'rxjs/operators';
 
 @Component({
     selector: 'tla-search-bar',

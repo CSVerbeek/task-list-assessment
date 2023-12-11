@@ -35,13 +35,25 @@ export class TaskListComponent {
     }
 
     splitOnSearchValue(value: string): { text: string; match: boolean }[] {
-        if (!this.searchValue || !value.includes(this.searchValue)) {
+        if (!this.searchValue || !value.toLowerCase().includes(this.searchValue.toLowerCase())) {
             return [{ text: value, match: false }];
         }
-        const result = value.split(this.searchValue)
-            .flatMap(part => ([{ text: part, match: false }, { text: this.searchValue, match: true }]));
-        delete result[result.length - 1];
-        return result;
+
+        const regex = new RegExp(this.searchValue, 'gi');
+        const matches: { text: string; match: true }[] = [];
+        let match;
+
+        while ((match = regex.exec(value)) !== null) {
+            matches.push({ text: match[0], match: true });
+        }
+
+        const nonMatches: { text: string; match: false }[] = value.split(regex).map(part => ({
+            text: part,
+            match: false
+        }));
+
+        // There should be exactly one more non match than matches. Therefore the index will get out of bounds with the last index.
+        return nonMatches.flatMap((nonMatch, index) => [nonMatch, matches[index] ?? { text: '', match: 'false' }]);
     }
 
     private filterTasksBySearchByValue(tasks: Task[], searchValue: string): Task[] {
