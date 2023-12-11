@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { TASK_SERVICE } from './core/i-task.service';
 import { ADD_TASK_SERVICE } from './core/i-add-task.service';
 import { TaskService } from './core/task.service';
-import { StubLocalDataApiService } from './data-api/data-api.service';
+import { StubLocalDataApiService } from './data-api/stub-local-data-api.service';
 import { DATA_API_SERVICE } from './core/i-data-api.service';
 import { DELETE_TASK_SERVICE } from './core/i-delete-task.service';
 import { EDIT_TASK_SERVICE } from './core/i-edit-task.service';

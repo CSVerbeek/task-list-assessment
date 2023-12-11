@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StubLocalDataApiService } from './data-api.service';
+import { StubLocalDataApiService } from './stub-local-data-api.service';
 
-describe('DataApiService', () => {
+describe('StubLocalDataApiService', () => {
     let service: StubLocalDataApiService;
 
     beforeEach(() => {
