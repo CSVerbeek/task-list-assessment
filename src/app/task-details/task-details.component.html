@@ -8,10 +8,11 @@
         <p class="task-description">{{task.description}}</p>
         <h3>Status</h3>
         <p class="task-status">{{task.status}}</p>
+        <button mat-flat-button color="warn" (click)="deleteTask(task.id)">Delete task</button>
     </mat-card-content>
 </mat-card>
 }
 @else {
-    <h2 class="no-task-found-message">Task not found</h2>
+<h2 class="no-task-found-message">Task not found</h2>
 }
 <a mat-flat-button color="primary" routerLink="/dashboard">To dashboard</a>

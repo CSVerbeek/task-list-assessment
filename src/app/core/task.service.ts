@@ -5,11 +5,12 @@ import { Task } from '../shared/task';
 import { Inject, Injectable } from '@angular/core';
 import { DATA_API_SERVICE, IDataApiService } from './i-data-api.service';
 import { IAddTaskService } from './i-add-task.service';
+import { IDeleteTaskService } from './i-delete-task.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskService implements ITaskService, IAddTaskService {
+export class TaskService implements ITaskService, IAddTaskService, IDeleteTaskService {
     private readonly _tasks$ = new BehaviorSubject<Task[]>([]);
     readonly tasks$: Observable<Task[]> = this._tasks$.asObservable();
 
@@ -32,6 +33,14 @@ export class TaskService implements ITaskService, IAddTaskService {
         // It's ok to cast to a promise here, since the new task is not used and we expect the API calls Observable to finish
         return firstValueFrom(this.dataApi.postTask(task)).then(task => {
             this._tasks$.next([...this._tasks$.value, task]);
+        });
+    }
+
+    async deleteTask(id: number): Promise<void> {
+        return firstValueFrom(this.dataApi.deleteTask(id)).then(() => {
+            const tasks = this._tasks$.value;
+            tasks.splice(tasks.findIndex(task => task.id === id), 1);
+            this._tasks$.next(tasks);
         });
     }
 }

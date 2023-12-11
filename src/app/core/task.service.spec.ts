@@ -23,6 +23,9 @@ describe('TaskService', () => {
                     ...task
                 });
             }
+            deleteTask(_id: number): Observable<void> {
+                return of();
+            }
         }
         service = new TaskService(dataApi);
     });
