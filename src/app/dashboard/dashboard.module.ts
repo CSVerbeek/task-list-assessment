@@ -9,6 +9,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
         ReactiveFormsModule,
         MatTableModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatButtonModule
     ]
 })
 export class DashboardModule { }

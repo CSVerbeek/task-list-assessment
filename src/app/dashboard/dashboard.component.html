@@ -1,4 +1,5 @@
 <div class="page">
     <tla-search-bar (searchValueChange)="onSearchValueChange($event)" class="search-bar"></tla-search-bar>
     <tla-task-list [searchValue]="searchValue" class="task-list"></tla-task-list>
+    <a mat-flat-button color="primary" routerLink="/add-task" class="add-task-button">Add a new task</a>
 </div>

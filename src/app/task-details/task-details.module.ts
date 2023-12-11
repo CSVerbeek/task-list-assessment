@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { TaskDetailsRoutingModule } from './task-details-routing.module';
 import { TaskDetailsComponent } from './task-details.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { TaskDetailsComponent } from './task-details.component';
     imports: [
         CommonModule,
         TaskDetailsRoutingModule,
-        MatCardModule
+        MatCardModule,
+        MatButtonModule
     ]
 })
 export class TaskDetailsModule { }

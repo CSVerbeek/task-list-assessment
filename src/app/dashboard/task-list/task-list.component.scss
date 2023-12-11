@@ -1,5 +1,10 @@
 .task-list {
     width: 100%;
+
+    tr.task-item:hover {
+        background-color: #00000011;
+        cursor: pointer;
+    }
 }
 
 .highlight {
