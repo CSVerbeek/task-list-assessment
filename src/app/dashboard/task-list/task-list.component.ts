@@ -2,7 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../../shared/task';
-import { ITaskService, TASK_SERVICE } from '../../i-task.service';
+import { ITaskService, TASK_SERVICE } from '../../core/i-task.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,23 +12,22 @@ import { Router } from '@angular/router';
 })
 export class TaskListComponent {
     readonly searchValue$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    readonly tasks$: Observable<Task[]>;
 
     @Input()
     set searchValue(value: string) {
         this.searchValue$.next(value);
     }
 
-    get searchValue(): string {
-        return this.searchValue$.value;
-    }
-
-    readonly tasks$: Observable<Task[]>;
-
     constructor(@Inject(TASK_SERVICE) public taskService: ITaskService, private router: Router) {
         this.tasks$ = combineLatest([this.taskService.tasks$, this.searchValue$])
             .pipe(
                 map(([tasks, searchValue]): Task[] => this.filterTasksBySearchByValue(tasks, searchValue))
             );
+    }
+
+    get searchValue(): string {
+        return this.searchValue$.value;
     }
 
     onTaskRowClick(id: Task['id']): void {

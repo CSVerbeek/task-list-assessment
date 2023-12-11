@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { TaskListComponent } from './task-list/task-list.component';
-import { TASK_SERVICE } from '../i-task.service';
+import { TASK_SERVICE } from '../core/i-task.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';

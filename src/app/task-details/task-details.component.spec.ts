@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskDetailsComponent } from './task-details.component';
-import { ITaskService, TASK_SERVICE } from '../i-task.service';
+import { ITaskService, TASK_SERVICE } from '../core/i-task.service';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Task } from '../shared/task';

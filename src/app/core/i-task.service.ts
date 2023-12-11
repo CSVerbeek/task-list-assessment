@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { Task } from "./shared/task";
+import { Task } from "../shared/task";
 import { InjectionToken } from "@angular/core";
 
 /*

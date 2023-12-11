@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddTaskComponent } from './add-task.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskFormValue } from './shared/types/task-form-value.type';
-import { ADD_TASK_SERVICE, IAddTaskService } from '../i-add-task.service';
+import { ADD_TASK_SERVICE, IAddTaskService } from '../core/i-add-task.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';

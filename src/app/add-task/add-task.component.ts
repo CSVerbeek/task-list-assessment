@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ADD_TASK_SERVICE, IAddTaskService } from '../i-add-task.service';
+import { ADD_TASK_SERVICE, IAddTaskService } from '../core/i-add-task.service';
 import { TaskFormValue } from './shared/types/task-form-value.type';
 import { Router } from '@angular/router';
 

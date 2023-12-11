@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { Task } from "./shared/task";
+import { Task } from "../shared/task";
 
 /* 
     Add new interface for adding a task, interface segregation principle.

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableModule } from '@angular/material/table';
 
 import { TaskListComponent } from './task-list.component';
-import { ITaskService, TASK_SERVICE } from '../../i-task.service';
+import { ITaskService, TASK_SERVICE } from '../../core/i-task.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Task } from '../../shared/task';
 

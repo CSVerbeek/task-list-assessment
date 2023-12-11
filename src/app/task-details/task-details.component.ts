@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ITaskService, TASK_SERVICE } from '../i-task.service';
+import { ITaskService, TASK_SERVICE } from '../core/i-task.service';
 import { Task } from '../shared/task';
 
 @Component({

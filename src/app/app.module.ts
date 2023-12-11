@@ -4,14 +4,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ITaskService, TASK_SERVICE } from './i-task.service';
+import { TASK_SERVICE } from './core/i-task.service';
+import { ADD_TASK_SERVICE } from './core/i-add-task.service';
+import { TaskService } from './core/task.service';
+import { DATA_API_SERVICE, IDataApiService } from './core/i-data-api.service';
+import { Observable, of } from 'rxjs';
 import { Task } from './shared/task';
-import { ADD_TASK_SERVICE, IAddTaskService } from './i-add-task.service';
 
 @NgModule({
     declarations: [
@@ -28,29 +28,24 @@ import { ADD_TASK_SERVICE, IAddTaskService } from './i-add-task.service';
         useValue: { appearance: 'outline' }
     }, {
         provide: TASK_SERVICE,
-        // Temporarily use a stub for development, so ng serve works without errors
-        useValue: new class implements ITaskService {
-            tasks$: Observable<Task[]> = new BehaviorSubject<Task[]>(
-                new Array(5).fill(null).map((_val, index): Task => ({
-                    id: index,
-                    title: `Title ${index}`,
-                    description: `Description ${index}`,
-                    status: 'new'
-                }))
-            );
-            findById(id: Task['id']): Observable<Task | undefined> {
-                return this.tasks$.pipe(
-                    map(tasks => tasks.find(task => task.id === id))
-                );
-            }
-        }
+        useExisting: TaskService
     }, {
         provide: ADD_TASK_SERVICE,
-        useValue: new class implements IAddTaskService {
-            addTask(task: Omit<Task, 'id'>): void {
-                console.log(task);
+        useExisting: TaskService
+    }, {
+        provide: DATA_API_SERVICE,
+        // Temporarily use a stub for development, so ng serve works without errors
+        useValue: new class implements IDataApiService {
+            getTasks(): Observable<Task[]> {
+                return of([]);
             }
-        }
+            postTask(task: Omit<Task, 'id'>): Observable<Task> {
+                return of({
+                    id: 1,
+                    ...task
+                });
+            }
+}
     }],
     bootstrap: [AppComponent]
 })
