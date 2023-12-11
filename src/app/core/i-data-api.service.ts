@@ -5,6 +5,7 @@ import { InjectionToken } from "@angular/core";
 export interface IDataApiService {
     getTasks(): Observable<Task[]>;
     postTask(task: Omit<Task, 'id'>): Observable<Task>;
+    putTask(task: Task): Observable<Task>;
     deleteTask(id: Task['id']): Observable<void>;
 }
 

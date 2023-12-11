@@ -12,6 +12,7 @@ import { TaskService } from './core/task.service';
 import { StubLocalDataApiService } from './data-api/data-api.service';
 import { DATA_API_SERVICE } from './core/i-data-api.service';
 import { DELETE_TASK_SERVICE } from './core/i-delete-task.service';
+import { EDIT_TASK_SERVICE } from './core/i-edit-task.service';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,9 @@ import { DELETE_TASK_SERVICE } from './core/i-delete-task.service';
         useExisting: TaskService
     }, {
         provide: ADD_TASK_SERVICE,
+        useExisting: TaskService
+    }, {
+        provide: EDIT_TASK_SERVICE,
         useExisting: TaskService
     }, {
         provide: DELETE_TASK_SERVICE,

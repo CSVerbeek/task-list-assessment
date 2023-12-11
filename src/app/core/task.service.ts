@@ -6,11 +6,12 @@ import { Inject, Injectable } from '@angular/core';
 import { DATA_API_SERVICE, IDataApiService } from './i-data-api.service';
 import { IAddTaskService } from './i-add-task.service';
 import { IDeleteTaskService } from './i-delete-task.service';
+import { IEditTaskService } from './i-edit-task.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TaskService implements ITaskService, IAddTaskService, IDeleteTaskService {
+export class TaskService implements ITaskService, IAddTaskService, IEditTaskService, IDeleteTaskService {
     private readonly _tasks$ = new BehaviorSubject<Task[]>([]);
     readonly tasks$: Observable<Task[]> = this._tasks$.asObservable();
 
@@ -31,8 +32,16 @@ export class TaskService implements ITaskService, IAddTaskService, IDeleteTaskSe
 
     async addTask(task: Omit<Task, 'id'>): Promise<void> {
         // It's ok to cast to a promise here, since the new task is not used and we expect the API calls Observable to finish
-        return firstValueFrom(this.dataApi.postTask(task)).then(task => {
-            this._tasks$.next([...this._tasks$.value, task]);
+        return firstValueFrom(this.dataApi.postTask(task)).then(newTask => {
+            this._tasks$.next([...this._tasks$.value, newTask]);
+        });
+    }
+
+    async editTask(task: Task): Promise<void> {
+        return firstValueFrom(this.dataApi.putTask(task)).then(newTask => {
+            const tasks = this._tasks$.value;
+            tasks[tasks.findIndex(existingTask => existingTask.id === task.id)] = newTask;
+            this._tasks$.next(tasks);
         });
     }
 

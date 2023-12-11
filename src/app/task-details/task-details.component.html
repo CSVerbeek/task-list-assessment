@@ -8,6 +8,7 @@
         <p class="task-description">{{task.description}}</p>
         <h3>Status</h3>
         <p class="task-status">{{task.status}}</p>
+        <a mat-flat-button color="primary" [routerLink]="['/add-task', task.id]">Edit task</a>
         <button mat-flat-button color="warn" (click)="deleteTask(task.id)">Delete task</button>
     </mat-card-content>
 </mat-card>

@@ -32,6 +32,12 @@ export class StubLocalDataApiService implements IDataApiService {
         return of(newTask);
     }
 
+    putTask(task: Task): Observable<Task> {
+        this.tasks.push(task);
+        this.saveTasksToLocalStorage();
+        return of(task);
+    }
+
     deleteTask(id: number): Observable<void> {
         this.tasks.splice(this.tasks.findIndex(task => task.id === id), 1);
         this.saveTasksToLocalStorage();
