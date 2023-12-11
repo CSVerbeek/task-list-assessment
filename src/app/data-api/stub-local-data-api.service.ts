@@ -33,7 +33,7 @@ export class StubLocalDataApiService implements IDataApiService {
     }
 
     putTask(task: Task): Observable<Task> {
-        this.tasks.push(task);
+        this.tasks[this.tasks.findIndex(existingTask => existingTask.id == task.id)] = task;
         this.saveTasksToLocalStorage();
         return of(task);
     }
