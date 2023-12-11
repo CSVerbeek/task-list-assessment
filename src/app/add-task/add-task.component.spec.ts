@@ -14,6 +14,8 @@ import { TASK_SERVICE } from '../core/i-task.service';
 import { EDIT_TASK_SERVICE } from '../core/i-edit-task.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 describe('AddTaskComponent', () => {
     let component: AddTaskComponent;
@@ -25,7 +27,7 @@ describe('AddTaskComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule, ReactiveFormsModule],
+            imports: [RouterTestingModule.withRoutes([{path: 'dashboard', component: DashboardComponent}]), MatFormFieldModule, MatSelectModule, MatInputModule, NoopAnimationsModule, ReactiveFormsModule],
             declarations: [AddTaskComponent, TaskFormComponent],
             providers: [{
                 provide: TASK_SERVICE,

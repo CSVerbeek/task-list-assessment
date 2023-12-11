@@ -8,6 +8,8 @@ import { Task } from '../shared/task';
 import { ActivatedRoute, RouterModule, convertToParamMap } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { DELETE_TASK_SERVICE } from '../core/i-delete-task.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 /*
     Needed to have control over the Observable inside our mocked service.
@@ -33,7 +35,7 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [TaskDetailsComponent],
-            imports: [MatCardModule, RouterModule],
+            imports: [RouterTestingModule.withRoutes([{path: 'dashboard', component: DashboardComponent}]), MatCardModule, RouterModule],
             providers: [{
                 provide: ActivatedRoute,
                 useValue: { paramMap: of(convertToParamMap({ id: 123 })) }
