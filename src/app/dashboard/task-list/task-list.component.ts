@@ -35,7 +35,7 @@ export class TaskListComponent {
     }
 
     splitOnSearchValue(value: string): { text: string; match: boolean }[] {
-        if (!this.searchValue || !value.toLowerCase().includes(this.searchValue.toLowerCase())) {
+        if (!this.searchValue || this.searchValue.length < 3 || !value.toLowerCase().includes(this.searchValue.toLowerCase())) {
             return [{ text: value, match: false }];
         }
 
