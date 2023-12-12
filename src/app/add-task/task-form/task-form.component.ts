@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task, TaskStatus, TaskStatuses } from '../../shared/task';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskFormValue } from '../shared/types/task-form-value.type';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'tla-task-form',
@@ -10,10 +11,12 @@ import { TaskFormValue } from '../shared/types/task-form-value.type';
 })
 export class TaskFormComponent implements OnInit {
     @Input()
-    task: Task | null | undefined;
+    task$?: Observable<Task | undefined>;
 
     @Output()
     submitted = new EventEmitter<TaskFormValue & { id?: Task['id'] }>();
+
+    private editId?: number;
 
     readonly taskStatusValues: TaskStatus[] = [...TaskStatuses];
 
@@ -24,9 +27,16 @@ export class TaskFormComponent implements OnInit {
     });
 
     ngOnInit(): void {
-        if (this.task) {
-            const { id: _id, ...taskFormValue } = this.task;
-            this.taskForm.setValue(taskFormValue);
+        if (this.task$) {
+            this.task$.subscribe({
+                next: task => {
+                    if(task) {
+                        const { id, ...taskFormValue } = task;
+                        this.taskForm.setValue(taskFormValue);
+                        this.editId = id;
+                    }
+                }
+            });
         }
     }
 
@@ -35,8 +45,8 @@ export class TaskFormComponent implements OnInit {
             return;
         }
         const formValue: Partial<TaskFormValue & { id?: Task['id'] }> = this.taskForm.value;
-        if (this.task) {
-            formValue.id = this.task.id;
+        if (this.editId) {
+            formValue.id = this.editId;
         }
         this.submitted.emit(formValue as TaskFormValue & { id?: Task['id'] });
     }

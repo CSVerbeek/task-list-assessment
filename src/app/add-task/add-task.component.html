@@ -1,3 +1,3 @@
-<tla-task-form [task]="task$ | async" (submitted)="onTaskFormSubmitted($event)"></tla-task-form>
+<tla-task-form [task$]="task$" (submitted)="onTaskFormSubmitted($event)"></tla-task-form>
 
 <a mat-stroked-button color="primary" routerLink="/dashboard">Cancel</a>
